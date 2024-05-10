@@ -12,8 +12,6 @@ interface IFooterProps {
 
 const Footer: React.FunctionComponent<IFooterProps> = (props) => {
   return <Box bgcolor="rgb(17,26,34)" >
-
- 
   <Container>
           <Stack
               direction="row"
@@ -37,7 +35,6 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
         gap={4}
         justifyContent="center"
       >
-
        <Image src={facebookIcon} width={30} height={30} alt="facebook Image" />
        <Image src={instagramIcon} width={30} height={30} alt="instagram Image" />
        <Image src={twitterIcon} width={30} height={30} alt="twitter Image" />

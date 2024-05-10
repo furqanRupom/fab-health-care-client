@@ -50,7 +50,6 @@ const WhyUs: React.FunctionComponent<IWhyUsProps> = (props) => {
                 <Typography fontWeight={700} component="h1" variant='h5'>
                     Why Choose US
                 </Typography>
-
             </Box>
 
             <Grid mt={5} container spacing={2}>
@@ -155,8 +154,6 @@ const WhyUs: React.FunctionComponent<IWhyUsProps> = (props) => {
                             </Typography>
                         </Box>
                     </Box>
-                    
-             
                 </Grid>
                 <Grid item md={6}>
                     <Image src={ChooseUs} width={400} height={400} alt="why choose us image" />
