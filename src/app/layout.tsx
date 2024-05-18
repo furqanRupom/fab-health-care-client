@@ -30,13 +30,11 @@ export default function RootLayout({
   return (
     <Providers>
     <html lang="en">
-      <body className={balooBhai.className}>
-     
+      <body >
           <AppRouterCacheProvider>
             {children}
           </AppRouterCacheProvider>
           <Toaster position='top-center' />
-   
       </body>
     </html>
     </Providers>

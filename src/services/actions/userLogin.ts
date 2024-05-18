@@ -12,13 +12,12 @@ export const userLogin = async (data : FieldValues) => {
         body:JSON.stringify(data),
     });
     const accessResponse = await response.json();
-    console.log(accessResponse);
     
-     if(!accessResponse.data.accessToken){
-         console.log({ accessToken: accessResponse.data.accessToken });
-         return null;
-     };
+    //  if(!accessResponse.data.accessToken){
+    //      console.log({ accessToken: accessResponse.data.accessToken });
+    //      return null;
+    //  };
    
-    storeUserInfo(accessResponse?.data?.accessToken);
+    // storeUserInfo(accessResponse?.data?.accessToken);
     return accessResponse;
 }

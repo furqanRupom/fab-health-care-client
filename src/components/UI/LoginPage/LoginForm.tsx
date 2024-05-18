@@ -25,30 +25,29 @@ interface ILoginFormProps {
 
 
 export const loginSchemaValidation = z.object({
-    email:z.string({required_error:"Pleave provide your email"}),
-    password:z.string({required_error:"Pleave provide your password"}).min(6,"Password should at least 6 characters")
-})
+    email: z.string({ required_error: "Please provide your email" }).email("Please provide your email"),
+    password:z.string({required_error:"Please provide your password"}).min(6,"Password should at least 6 characters")
+});
 
 const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
     const router = useRouter();
+    const [error,setError] = React.useState<string>("");
     const handleLogin = async(data:FieldValues) => {
         try {
-            console.log(data)
            const loggedInUser = await userLogin(data);
+
            if(loggedInUser.success){
                toast.success(loggedInUser.message);
                localStorage.setItem('accessToken',loggedInUser.data.accessToken);
-               router.push('/');
+               router.push('/dashboard');
+           }else{
+             setError(loggedInUser.message);
            }
         } catch (error: any) {
             toast.error(error.message);
             router.push('/login');
         }
     }
-
-
-   
-
     return <Container >
         <Stack sx={{
             height: "100vh",
@@ -81,13 +80,23 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
                 </Stack>
                 <Box>
                     {/* login form  */}
-                    <FabForm onSubmit={handleLogin} resolver={zodResolver(loginSchemaValidation)}>
+                  {
+                        error && <Typography sx={{
+                            color: "red",
+                            marginTop: "1px"
+                        }} variant='subtitle2'>{error}</Typography>
+                  }
+                    <FabForm defaultValues={{
+                        email:"",
+                        password:""
+
+                    }}  onSubmit={handleLogin} resolver={zodResolver(loginSchemaValidation)}>
                         <Grid container spacing={3} my={1}>
                             <Grid item md={6}>
-                                <FabInput required={true}  name="email" type='email' label="Enter Your Email" variant="outlined" size="small" fullWidth={true} />
+                                <FabInput   name="email" type='email' label="Enter Your Email" variant="outlined" size="small" fullWidth={true} />
                             </Grid>
                             <Grid item md={6}>
-                                <FabInput required={true}  name="password" type='password' label="Enter Your Password" variant="outlined" size="small" fullWidth={true} />
+                                <FabInput   name="password" type='password' label="Enter Your Password" variant="outlined" size="small" fullWidth={true} />
                             </Grid>
                         </Grid>
                         <Typography textAlign="end" fontWeight={300} variant='subtitle1' component="p"> <Link href="/register">Forget password?</Link></Typography>

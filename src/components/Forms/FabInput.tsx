@@ -9,7 +9,7 @@ interface IFabInputProps {
     type?: string;
     fullWidth?: boolean;
     variant?: TextFieldVariants | undefined;
-    required:boolean;
+    required?:boolean;
 }
 
 const FabInput: React.FunctionComponent<IFabInputProps> = ({ name, label, size, type, fullWidth, variant, required }) => {
@@ -18,7 +18,7 @@ const FabInput: React.FunctionComponent<IFabInputProps> = ({ name, label, size, 
         <Controller
             control={control}
             name={name}
-            render={({field}) => (
+            render={({field,fieldState:{error}}) => (
                 <TextField
                     {...field}
                     label={label}
@@ -27,7 +27,8 @@ const FabInput: React.FunctionComponent<IFabInputProps> = ({ name, label, size, 
                     variant={variant}
                     fullWidth={fullWidth}
                     placeholder={label}
-                    required={required}
+                    error={!!error?.message}
+                    helperText={error?.message}
                 />
             )}
         />

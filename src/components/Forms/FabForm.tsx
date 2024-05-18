@@ -4,6 +4,7 @@ import * as React from 'react';
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 interface IFormConfig {
   resolver?: any
+  defaultValues?:Record<string, any>
 }
 interface IFabFormProps {
     children:React.ReactNode,
@@ -11,12 +12,17 @@ interface IFabFormProps {
 } 
 
 
-const FabForm: React.FunctionComponent<IFabFormProps & IFormConfig> = ({children,onSubmit,resolver}) => {
-    const methods = useForm();
+const FabForm: React.FunctionComponent<IFabFormProps & IFormConfig> = ({ children, onSubmit, resolver, defaultValues }) => {
+ 
     const formConfig:IFormConfig = {};
     if(resolver){
       formConfig["resolver"] = resolver;
     }
+
+    if(defaultValues){
+      formConfig["defaultValues"] = defaultValues;
+    }
+   const methods = useForm(formConfig);
 
     const formSubmit:SubmitHandler<FieldValues> = (data) => {
       console.log(data)
