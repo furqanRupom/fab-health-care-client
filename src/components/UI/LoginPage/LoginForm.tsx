@@ -38,7 +38,7 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
 
            if(loggedInUser.success){
                toast.success(loggedInUser.message);
-               localStorage.setItem('accessToken',loggedInUser.data.accessToken);
+          
                router.push('/dashboard');
            }else{
              setError(loggedInUser.message);

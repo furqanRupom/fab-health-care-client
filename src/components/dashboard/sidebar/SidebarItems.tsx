@@ -14,7 +14,6 @@ interface ISidebarItemsProps {
 const SidebarItems: React.FunctionComponent<ISidebarItemsProps> = ({item}) => {
     const linkPaths = `/dashboard/${item.path}`;
     const pathname = usePathname();
-    console.log(pathname);
   return <Link href={linkPaths}>
       <ListItem 
       sx={{

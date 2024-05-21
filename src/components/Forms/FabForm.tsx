@@ -1,5 +1,4 @@
 "use client"
-
 import * as React from 'react';
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 interface IFormConfig {
@@ -25,7 +24,6 @@ const FabForm: React.FunctionComponent<IFabFormProps & IFormConfig> = ({ childre
    const methods = useForm(formConfig);
 
     const formSubmit:SubmitHandler<FieldValues> = (data) => {
-      console.log(data)
       onSubmit(data);
     }
   return <>

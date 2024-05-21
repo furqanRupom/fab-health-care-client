@@ -17,3 +17,5 @@ export interface IDrawerItem {
     icon?:OverridableComponent<SvgIconTypeMap<{},"svg">> & {muiName:string};
     child?:IDrawerItem[];
 }
+
+export const Gender = ["MALE","FEMALE"]

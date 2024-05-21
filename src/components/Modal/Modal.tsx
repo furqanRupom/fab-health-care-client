@@ -36,6 +36,9 @@ export const FabModal: React.FunctionComponent<IModalProps> = ({open = false,set
                 }}
             >
                 <DialogTitle>{title}</DialogTitle>
+
+             
+
                 {children}
                 
             </Dialog>

@@ -1,6 +1,7 @@
 import { authKey } from "@/constants/authKey";
+import { getNewAccessToken } from "@/services/auth.services";
 import { IMetaData } from "@/types";
-import { getLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import axios from "axios";
 const instance = axios.create();
 instance.defaults.headers.post['Content-type'] = "application/json";
@@ -30,16 +31,28 @@ instance.interceptors.response.use(function (response) {
         meta:response?.data?.meta
     }
     return responseObject;
-}, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    const responseErrorObject = {
-        statusCode:error?.response?.data?.statusCode || 500,
-        message:error?.response?.data?.message || "something went wrong",
-        data:error?.response?.data?.data || "something went wrong"
 
+}, async function (error) {
+    const config = error.config;
+
+    if(error?.response?.status === 500 && !config.sent && config ){
+      config.sent = true;
+      if(config.sent === true){
+          const response = await getNewAccessToken();
+          const accessToken = response?.data?.accessToken;
+          config.headers['Authorization'] = accessToken;
+          setLocalStorage(authKey,accessToken);
+      }
+      return instance(config);
+    }else{
+        const responseErrorObject = {
+            statusCode: error?.response?.data?.statusCode || 500,
+            message: error?.response?.data?.message || "something went wrong",
+            data: error?.response?.data?.data || "something went wrong"
+        }
+        return responseErrorObject;
     }
-    return responseErrorObject;
+    
 });
 
 

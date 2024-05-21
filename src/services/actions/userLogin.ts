@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 import { ILoginData } from "@/components/UI/LoginPage/LoginForm";
 import { storeUserInfo } from "../auth.services";
 import { FieldValues } from "react-hook-form";
@@ -10,14 +10,15 @@ export const userLogin = async (data : FieldValues) => {
             "content-type":"application/json"
         },
         body:JSON.stringify(data),
+        credentials:"include"
     });
     const accessResponse = await response.json();
     
-    //  if(!accessResponse.data.accessToken){
-    //      console.log({ accessToken: accessResponse.data.accessToken });
-    //      return null;
-    //  };
+     if(!accessResponse?.data?.accessToken){
+         console.log({ accessToken: accessResponse.data.accessToken });
+         return null;
+     };
    
-    // storeUserInfo(accessResponse?.data?.accessToken);
+    storeUserInfo(accessResponse?.data?.accessToken);
     return accessResponse;
 }
